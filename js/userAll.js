@@ -1,45 +1,19 @@
-let form = document.querySelector("#registration");
+let form = document.querySelector("#registrationuser");
 let formBtn = document.querySelector("#formBtn");
 let alertsContainer = document.querySelector("#alerts");
 let baseUrl = "http://127.0.0.1";
-let port = ":8000";
-
-// try{
-// form.addEventListener("submit", createUser);
-// }catch(e){}
-// getUsers();
-
-function createUser(event) {
-    event.preventDefault();
-    const form = event.target;
-    const formData = {};
-    for (let field of form.elements) {
-        if (field.name) {
-            formData[field.name] = field.value;
-        }
-    }
-    fetch(`${baseUrl}${port}/createUser`, {
-        method: "POST",
-        body: JSON.stringify(formData)
-    })
-        .then(response => {
-            if (response.ok) {
-                showAlert("Sukurtas");
-                form.reset();
-                getUsers();
-            }
-        })
-
-}
+let port = ":8080";
+getUsers();
 function getUsers() {
-    fetch(`${baseUrl}${port}/getUsers`)
+    fetch(`${baseUrl}${port}/api/mentors`)
         .then(response => response.json())
         .then(data => {
+            console.log(data);
             fillTable(data);
         })
 }
 function fillTable(data) {
-    let registration = document.querySelector("#registration");
+    let registration = document.querySelector("#registrationuser");
     let HTML = "";
     let counter = 1;
     data.forEach(user => {
@@ -67,7 +41,7 @@ function addEventListenersOnUpdate() {
     updateBnts.forEach(btn => {
         btn.addEventListener("click", function (event) {
             event.preventDefault();
-            editUser(btn.getAttribute("userId"));
+            editMentor(btn.getAttribute("userId"));
             window.scrollTo(0, 0);
         });
     })
@@ -76,34 +50,17 @@ function addEventListenersOnDelete() {
     let deleteBnts = document.querySelectorAll(".delete");
     deleteBnts.forEach(btn => {
         btn.addEventListener("click", function (event) {
-            deleteUser(btn.getAttribute("userId"));
+            deleteMentor(btn.getAttribute("userId"));
         })
     });
 }
-
-function deleteUser(event, userId) {
-    event.preventDefault();
-    const formData = { "id": userId };
-    fetch(`${baseUrl}${port}/deleteUser`, {
-        method: "POST",
-        body: JSON.stringify(formData)
-    })
-        .then(response => {
-            if (response.ok) {
-                showAlert("Ištrintas");
-                getUsers();
-            }
-        })
-    window.scrollTo(0, 0);
-}
-
-function editUser(id) {
+function editMentor(id) {
     toggleForm(true);
-    getUser(id);
+    getMentor(id);
 }
 
-function getUser(id) {
-    fetch(`${baseUrl}${port}/getUser?id=${id}`)
+function getMentor(id) {
+    fetch(`${baseUrl}${port}/getMentor?id=${id}`)
         .then(response => response.json())
         .then(data => {
             fillForm(data);
@@ -116,17 +73,13 @@ function toggleForm(state) {
     document.querySelector("#id").value = "";
     if (state) {
         formBtn.innerText = "Atnaujinti";
-        form.removeEventListener("submit", updateUser);
-        form.addEventListener("submit", createUser);
+        form.removeEventListener("submit", updateMentor);
+        form.addEventListener("submit", createMentor);
     }
 }
-
 function showAlert(state) {
     alertsContainer.innerHTML = `
     <div class = "alert alert-success">
         <strong>Success!</strong>Vartotojas sėkmingai ${state}.
     </div>
         `};
-setTimeout(() => {
-    alertsContainer.innerHTML = '';
-}, 3000);
