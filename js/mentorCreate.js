@@ -1,9 +1,29 @@
-let form = document.querySelector("#mentorregistration");
-let formBtn = document.querySelector("#formBtn");
-let alertsContainer = document.querySelector("#alerts");
 let baseUrl = "http://127.0.0.1";
-let port = ":3306";
-getMentors();
+let port = ":8000";
+console.log("siunčiqm duomenis is formos");
+function createMentor(event) {
+    event.preventDefault();
+    const form = event.target;
+    const formData = {};
+    for (let field of form.elements) {
+        if (field.name) {
+            formData[field.name] = field.value;
+        }
+    }
+    fetch(`${baseUrl}${port}/createMentor`, {
+        method: "POST",
+        body: JSON.stringify(formData)
+    })
+        .then(response => {
+            if (response.ok) {
+                showAlert("Sukurtas");
+                form.reset();
+                getMentors();
+            }
+        })
+
+}
+
 function getMentors() {
     fetch(`${baseUrl}${port}/getMentors`)
         .then(response => response.json())
@@ -12,17 +32,17 @@ function getMentors() {
         })
 }
 function fillTable(data) {
-    let registration = document.querySelector("#mentorregistration");
+    let registration = document.querySelector("#registration");
     let HTML = "";
     let counter = 1;
     data.forEach(mentor => {
         HTML += `
         <tr> 
         <td>${counter++}</td>
-        <td>${mentor.mentorname}</td>   
-        <td>${mentor.mentorsurname}</td>    
-        <td>${mentor.mentorinputEmail}</td>
-        <td>${mentor.mentorinputPassword}</td>
+        <td>${mentor.name}</td>   
+        <td>${mentor.surname}</td>    
+        <td>${mentor.inputemail4}</td>
+        <td>${mentor.inputpassword4}</td>
         <td>
             <a href="" mentorId="${mentor.id}"class="btn btn-sm btn-primary update"><i class="fas fa-edit"></i> Taisyti</a>
             <a href="" mentorId="${mentor.id}"class="btn btn-sm btn-primary update"><i class="fas fa-edit"></i> Ištrinti</a>
@@ -53,6 +73,23 @@ function addEventListenersOnDelete() {
         })
     });
 }
+
+function deleteMentor(event, mentorId) {
+    event.preventDefault();
+    const formData = { "id": mentorId };
+    fetch(`${baseUrl}${port}/deleteMentor`, {
+        method: "POST",
+        body: JSON.stringify(formData)
+    })
+        .then(response => {
+            if (response.ok) {
+                showAlert("Ištrintas");
+                getMentors();
+            }
+        })
+    window.scrollTo(0, 0);
+}
+
 function editMentor(id) {
     toggleForm(true);
     getMentor(id);
@@ -76,9 +113,13 @@ function toggleForm(state) {
         form.addEventListener("submit", createMentor);
     }
 }
+
 function showAlert(state) {
     alertsContainer.innerHTML = `
     <div class = "alert alert-success">
-        <strong>Success!</strong>Mentorius sėkmingai ${state}.
+        <strong>Success!</strong>Vartotojas sėkmingai ${state}.
     </div>
         `};
+setTimeout(() => {
+    alertsContainer.innerHTML = '';
+}, 3000);

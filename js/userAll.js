@@ -2,10 +2,10 @@ let form = document.querySelector("#registrationuser");
 let formBtn = document.querySelector("#formBtn");
 let alertsContainer = document.querySelector("#alerts");
 let baseUrl = "http://127.0.0.1";
-let port = ":8080";
+let port = ":3306";
 getUsers();
 function getUsers() {
-    fetch(`${baseUrl}${port}/api/mentors`)
+    fetch(`${baseUrl}${port}/api/users`)
         .then(response => response.json())
         .then(data => {
             console.log(data);
@@ -41,7 +41,7 @@ function addEventListenersOnUpdate() {
     updateBnts.forEach(btn => {
         btn.addEventListener("click", function (event) {
             event.preventDefault();
-            editMentor(btn.getAttribute("userId"));
+            editUser(btn.getAttribute("userId"));
             window.scrollTo(0, 0);
         });
     })
@@ -50,17 +50,17 @@ function addEventListenersOnDelete() {
     let deleteBnts = document.querySelectorAll(".delete");
     deleteBnts.forEach(btn => {
         btn.addEventListener("click", function (event) {
-            deleteMentor(btn.getAttribute("userId"));
+            deleteUser(btn.getAttribute("userId"));
         })
     });
 }
-function editMentor(id) {
+function editUser(id) {
     toggleForm(true);
-    getMentor(id);
+    getUser(id);
 }
 
-function getMentor(id) {
-    fetch(`${baseUrl}${port}/getMentor?id=${id}`)
+function getUser(id) {
+    fetch(`${baseUrl}${port}/getUser?id=${id}`)
         .then(response => response.json())
         .then(data => {
             fillForm(data);
@@ -73,8 +73,8 @@ function toggleForm(state) {
     document.querySelector("#id").value = "";
     if (state) {
         formBtn.innerText = "Atnaujinti";
-        form.removeEventListener("submit", updateMentor);
-        form.addEventListener("submit", createMentor);
+        form.removeEventListener("submit", updateUser);
+        form.addEventListener("submit", createUser);
     }
 }
 function showAlert(state) {
