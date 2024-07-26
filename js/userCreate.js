@@ -1,9 +1,9 @@
 let baseUrl = "http://127.0.0.1";
 let port = ":8080";
 console.log("siunčiam duomenis is formos");
-document.querySelector("#mentorregistration").addEventListener("submit",createMentor);
+document.querySelector("#userregistration").addEventListener("submit",createUser);
 // toggleForm(true);
-function createMentor(event) {
+function createUser(event) {
     event.preventDefault();
     console.log("labas");
     const form = event.target;
@@ -13,10 +13,10 @@ function createMentor(event) {
             formData[field.name] = field.value;
         }
     }
-    console.log(`${baseUrl}${port}/api/mentors`);
+    console.log(`${baseUrl}${port}/api/users`);
     console.log(JSON.stringify(formData));
 
-    fetch(`${baseUrl}${port}/api/mentors`, {
+    fetch(`${baseUrl}${port}/api/users`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

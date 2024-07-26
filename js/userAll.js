@@ -22,8 +22,8 @@ function fillTable(data) {
         <td>${counter++}</td>
         <td>${user.name}</td>   
         <td>${user.surname}</td>    
-        <td>${user.inputemail4}</td>
-        <td>${user.inputpassword4}</td>
+        <td>${user.inputemail}</td>
+        <td>${user.inputpassword}</td>
         <td>
             <a href="" userId="${user.id}"class="btn btn-sm btn-primary update"><i class="fas fa-edit"></i> Taisyti</a>
             <a href="" userId="${user.id}"class="btn btn-sm btn-primary update"><i class="fas fa-edit"></i> Ištrinti</a>

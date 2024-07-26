@@ -24,29 +24,34 @@
     <title>Document</title>
 </head>
 <body>
+  <div id="alertsContainer"></div>
     <h1>Registruotis kaip mentoriui</h1>
       <form method="post" class="row g-3" id="mentorregistration">
         <div class="col-md-6">
             <label for="mentorname" class="form-label">Vardas</label>
-            <input type="text" class="form-control" id="mentorname" required>
+            <input type="text" class="form-control" name="name" value="a" id="mentorname" >
           </div>
           <div class="col-md-6">
             <label for="mentorsurname" class="form-label">Pavardė</label>
-            <input type="text" class="form-control" id="mentorsurname" required>
+            <input type="text" class="form-control" name="surname" value="b" id="mentorsurname" >
           </div>
         <div class="col-md-6">
           <label for="mentorinputEmail" class="form-label">Email</label>
-          <input type="email" class="form-control" id="mentorinputEmail" required>
+          <input type="email" class="form-control" name="email" value="c@d.e" id="mentorinputEmail" >
         </div>
         <div class="col-md-6">
-          <label for="mentorinputPassword" class="form-label">Slaptažodis</label>
-          <input type="password" class="form-control" id="mentorinputPassword" required>
+          <label for="mentorinputPassword" class="form-label">telefonas</label>
+          <input type="text" class="form-control" name="mobile" value="f" id="mentorinputMobile" >
+        </div>
+        <div class="col-md-6">
+          <label for="mentorinputPassword" class="form-label">slaptažodis</label>
+          <input type="password" class="form-control" name="password" value="e" id="mentorinputPassword" >
         </div>
         
         <div class="col-12">
           <div class="form-check">
-            <input class="form-check-input" type="checkbox" id="gridCheck">
-            <label class="form-check-label" for="gridCheck" >
+            <input class="form-check-input" type="checkbox" name="cb" id="gridCheck">
+            <label class="form-check-label" for="gridCheck" checked >
               Sutinku su sąlygomis
             </label>
           </div>
