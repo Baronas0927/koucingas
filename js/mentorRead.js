@@ -25,7 +25,7 @@ function fillTable(data) {
         <td>${mentor.email}</td>
         <td>${mentor.mobile}</td>
         <td>${mentor.password}</td>
-        <td>${mentor.id} <button id="updateBtns">Edit</button> ${mentor.id} <button>Delete</button></td>
+        <td>${mentor.id} <button id="updateBtn">Edit</button> ${mentor.id} <button>Delete</button></td>
         <td>
             <form action="" class="delform" method="get">
                 <button class="btn btn-danger" type="submit" name="id" value="${mentor.id}">there u go</button>
