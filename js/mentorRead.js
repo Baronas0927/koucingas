@@ -25,12 +25,13 @@ function fillTable(data) {
         <td>${mentor.email}</td>
         <td>${mentor.mobile}</td>
         <td>${mentor.password}</td>
-        <td>${mentor.id} <button id="updateBtn">Edit</button> ${mentor.id} <button>Delete</button></td>
         <td>
-            <form action="" class="delform" method="get">
-                <button class="btn btn-danger" type="submit" name="id" value="${mentor.id}">there u go</button>
-            </form>
-
+          <form action="" class="editform" method="get">
+            <button class="btn btn-primary editBtn"  name="editId" value="${mentor.id}">Redaguoti</button> 
+             </form> 
+             <form action="" class="delform" method="get">
+                 <button class="btn btn-danger deleteBtn" type="submit" name="deleteId" value="${mentor.id}">delete</button>
+               </form> 
         </td>
         </tr>
         `
@@ -47,21 +48,46 @@ function updStuff(params) {
 }
 
 function addListeners() {
-    let forms = document.querySelectorAll(".delform");
-    console.log(forms);
-    forms.forEach(form => {
-        console.log("i listen");
+    let deletes = document.querySelectorAll(".delform");
+    let edits =   document.querySelectorAll(".editform");
+    // console.log(deletes);
+    console.log(edits);
+    
+    deletes.forEach(form => {
+        // console.log("i listen");
         form.addEventListener("submit", delStuff);
     });
-    console.log("lalala");
+    edits.forEach(form =>{
+        form.addEventListener("submit",editStuff);
+});
+    // console.log("lalala");
 }
-
-function delStuff(event) {
+function editStuff(event){
     event.preventDefault();
 
     const form = event.target;
-    const idValue = form.querySelector('button[name="id"]').value;
+    const idValue = form.querySelector('button[name="editId"]').value;
     console.log(`ID value: ${idValue}`);
+    //parasome uzklausa post i backenda "8080" redagavimui su idValue ka redaguoti
+    
+}
+function delStuff(event) {
+    event.preventDefault();
+    const form = event.target;
+    const idValue = form.querySelector('button[name="deleteId"]').value;
+    console.log(`ID value: ${idValue}`);
+    const formData = { id: idValue };
+    fetch(`${baseUrl}${port}/deleteMentor`, {
+        method: "POST",
+        body: JSON.stringify(formData),
+    })
+        .then(response => {
+            if (response.ok) {
+                showAlert("Ištrintas");
+                form.reset();
+                getMentors();
+            }
+        })
     //parasome uzklausa post i backenda "8080" trinimui su idValue ka trinti
 }
 function updateMentor() {
