@@ -19,7 +19,7 @@ function addEventListenersOnDelete() {
 function deleteMentor(mentorId) {
     console.log(mentorId);
     const formData = { "id": mentorId };
-    fetch(`${baseUrl}${port}/deleteMentor`, {
+    fetch(`${baseUrl}${port}/api/mentors`, {
         method: "POST",
         body: JSON.stringify(formData)
     })

@@ -77,8 +77,11 @@ function delStuff(event) {
     const idValue = form.querySelector('button[name="deleteId"]').value;
     console.log(`ID value: ${idValue}`);
     const formData = { id: idValue };
-    fetch(`${baseUrl}${port}/deleteMentor`, {
-        method: "POST",
+    fetch(`${baseUrl}${port}/api/mentors`, {
+        method: "DELETE",
+        headers: {
+            "Content-Type": "application/json"  // Set the Content-Type header to application/json
+        },
         body: JSON.stringify(formData),
     })
         .then(response => {
@@ -93,7 +96,9 @@ function delStuff(event) {
 function updateMentor() {
     event.preventDefault();
     const form = event.target;
-    fetch(`${baseUrl}${port}/updateMentor`, {
+    const idValue = form.querySelector('button[name="updateId"]').value;
+    //==== kur formdata su VISAIS name surname ir bla bla?
+    fetch(`${baseUrl}${port}/api/mentors/${idValue}`, {
         method: "POST",
         body: JSON.stringify(formData),
     })
@@ -125,7 +130,7 @@ function addEventListenersOnDelete() {
 }
 
 function getMentor(id) {
-    fetch(`${baseUrl}${port}/getMentor?id=${id}`)
+    fetch(`${baseUrl}${port}/api/mentors`)
         .then(response => response.json())
         .then(data => {
             fillForm(data);
