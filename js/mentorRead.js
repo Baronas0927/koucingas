@@ -12,7 +12,7 @@ function getMentors() {
         })
 }
 function fillTable(data) {
-    let registration = document.querySelector("#mentorregistration");
+    let registration = document.querySelector("#mentorregistrationTbody");
     let HTML = "";
     let counter = 1;
     console.log(data);
@@ -36,7 +36,7 @@ function fillTable(data) {
         </tr>
         `
     });
-    registration.innerHTML += HTML;
+    registration.innerHTML = HTML;
     addListeners();
     //kvieciam redagavimo listeneriu uzdejima/aktyvavima
     // addEventListenersOnDelete(); 
@@ -77,12 +77,12 @@ function delStuff(event) {
     const idValue = form.querySelector('button[name="deleteId"]').value;
     console.log(`ID value: ${idValue}`);
     const formData = { id: idValue };
-    fetch(`${baseUrl}${port}/api/mentors`, {
+    fetch(`${baseUrl}${port}/api/mentors/${idValue}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json"  // Set the Content-Type header to application/json
         },
-        body: JSON.stringify(formData),
+        // body: JSON.stringify(formData),
     })
         .then(response => {
             if (response.ok) {
